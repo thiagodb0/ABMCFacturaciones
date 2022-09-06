@@ -119,8 +119,8 @@ ALTER PROCEDURE [dbo].[SP_INSERTAR_MAESTRO]
 	@presupuesto_nro int OUTPUT
 AS
 BEGIN
-	INSERT INTO factura(fecha, id_forma_pago, cliente, total)
-    VALUES (GETDATE(), @forma_pago, @cliente, @total);
+	INSERT INTO factura(fecha, id_forma_pago, cliente, total, estado)
+    VALUES (GETDATE(), @forma_pago, @cliente, @total, 'Activa');
     --Asignamos el valor del último ID autogenerado (obtenido --  
     --mediante la función SCOPE_IDENTITY() de SQLServer)	
     SET @presupuesto_nro = SCOPE_IDENTITY();
@@ -150,6 +150,20 @@ select nro_factura, cliente, fecha
 from factura
 where fecha between @fecha1 and @fecha2 
 
+
+
 set dateformat dmy
 
-execute consult_fact_fecha '30/08/2022', '10/09/2022'
+
+create procedure sp_baja
+@nro_fact int
+as 
+update factura
+set estado = 'Baja' where nro_factura = @nro_fact
+
+alter procedure sp_cons_fact
+as
+select * from factura
+where estado = 'Activo'
+
+

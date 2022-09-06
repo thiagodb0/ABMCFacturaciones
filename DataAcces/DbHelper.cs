@@ -115,11 +115,12 @@ namespace ABMC_Facturacion
        
         public void darBaja(int nro)
         {
-            cmd.CommandText = "sp_dar_baja";
+            cnn.Open();
+            cmd.CommandText = "sp_baja";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nro_fact",nro);
             cmd.ExecuteNonQuery();
-
+            cnn.Close();
 
         }
 

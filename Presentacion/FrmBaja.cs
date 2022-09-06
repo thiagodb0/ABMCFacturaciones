@@ -35,10 +35,17 @@ namespace ABMC_Carreras.Presentacion
         private void BtnBaja_Click(object sender, EventArgs e)
         {
 
-            //oBD.darBaja(Convert.ToInt32(DgvFacturas.Rows[0]));
+            oBD.darBaja(Convert.ToInt32(DgvFacturas.CurrentCell.Value));
+            MessageBox.Show("Baja realizada con exite","Baja Correcta"
+                           , MessageBoxButtons.OK
+                           ,MessageBoxIcon.Information);
            
         }
 
-        
+        private void BtnActualizar_Click(object sender, EventArgs e)
+        {
+            DataTable tabla = oBD.consultarBD("sp_cons_fact");
+            DgvFacturas.DataSource = tabla;
+        }
     }
 }
